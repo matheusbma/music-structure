@@ -251,8 +251,6 @@ export default {
 .segmentCircle {
     transition: r 1.5s ease-out, fill 1.5s ease-out, cx 0.5s, cy 0.5s; /*, cx 1s ease, cy 1s ease;*/
 }
-.playingSegmentCircle {
-}
 .segmentCirclePlaying {
     transition: r 0.1s ease-in, fill 0.1s ease-in;
 }

@@ -4,6 +4,9 @@
             <v-col>Repetition </v-col>
 
             <v-spacer></v-spacer>
+            <v-btn icon small @click="downloadInfoOnClick" :color="showLoudness ? 'white' : 'dimgrey'">
+                <v-icon>mdi-download</v-icon>
+            </v-btn>
             <v-btn icon small @click="showLoudness = !showLoudness" :color="showLoudness ? 'white' : 'dimgrey'">
                 <v-icon>mdi-equalizer</v-icon>
             </v-btn>
@@ -47,7 +50,7 @@
                 :loop="false"
             />
             <g v-if="showFineStructure">
-                <Section
+                <Section 
                     v-for="(section, index) in fineStructure"
                     :key="index + 'fine'"
                     :section="section"
@@ -139,6 +142,31 @@ export default {
     watch: {},
     mounted() {},
     methods: {
+        downloadInfoOnClick() {
+            const InfoList = []
+
+            for (let i = 0; i < this.track.harmonicStructureCourse.length; i++) {
+                const obj = {
+                    'Name': this.$store.getters.selectedTrack.trackData.name,
+                    'GroupID': this.track.harmonicStructureCourse[i].groupID,
+                    'Start': this.track.harmonicStructureCourse[i].start,
+                    'End': this.track.harmonicStructureCourse[i].end,
+                    'Duration': this.track.harmonicStructureCourse[i].end - this.track.harmonicStructureCourse[i].start,
+                }
+                InfoList.push(obj);
+            }
+            
+            InfoList.sort((a, b) => (a.Start > b.Start) ? 1 : -1);
+            console.log(InfoList);
+
+            const json = JSON.stringify(InfoList);
+            const blob = new Blob([json], {type: 'application/json'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${this.$store.getters.selectedTrack.trackData.name}.json`;
+            link.click();
+
+        },
         groupAmount(structure) {
             let maxGroupID = 0;
             for (let i = 0; i < structure.length; i++) {
@@ -158,6 +186,7 @@ export default {
         clickedHelp(event) {},
     },
 };
+
 </script>
 
 <style scoped>

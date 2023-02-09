@@ -203,8 +203,18 @@ export default {
             }
         },
     },
-    mounted() {},
+    mounted() {
+        // const gtInfo = {
+        //     start: this.section.start,
+        //     end: this.section.end,
+        //     duration: this.section.end - this.section.start,
+        //     position: this.verticalOffset + this.verticalPosition,
+        //     index: this.section.groupID
+        // }
+        // console.log(gtInfo)
+    },
     methods: {
+
         dynamics(sample) {
             return this.track.features.sampled.dynamics[sample];
         },
@@ -241,6 +251,7 @@ export default {
         },
     },
 };
+
 </script>
 
 <style scoped>
